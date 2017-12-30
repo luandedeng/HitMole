@@ -12,9 +12,36 @@ module ui {
         
             super.createChildren();
             this.createView(ui.GameUI.uiView);
-
         }
+    }
+}
 
+module ui {
+    export class GameOverUI extends View {
+		public restartBtn:Laya.Button;
+		public scoreNums:Laya.Box;
+
+        public static  uiView:any ={"type":"View","props":{"width":500,"height":400},"child":[{"type":"Image","props":{"y":0,"x":0,"width":500,"skin":"ui/overBg.png","sizeGrid":"17,15,21,17","height":400}},{"type":"Image","props":{"y":63,"x":58,"skin":"ui/total Score.png"}},{"type":"Button","props":{"y":295,"x":161,"var":"restartBtn","stateNum":2,"skin":"ui/btn_restart.png"}},{"type":"Box","props":{"y":172,"x":160,"var":"scoreNums"},"child":[{"type":"Clip","props":{"skin":"ui/clip_number.png","name":"item0","clipX":10}},{"type":"Clip","props":{"x":18,"skin":"ui/clip_number.png","name":"item1","clipX":10}},{"type":"Clip","props":{"x":36,"skin":"ui/clip_number.png","name":"item2","clipX":10}},{"type":"Clip","props":{"x":54,"skin":"ui/clip_number.png","name":"item3","clipX":10}},{"type":"Clip","props":{"x":72,"skin":"ui/clip_number.png","name":"item4","clipX":10}},{"type":"Clip","props":{"x":90,"skin":"ui/clip_number.png","name":"item5","clipX":10}},{"type":"Clip","props":{"x":108,"skin":"ui/clip_number.png","name":"item6","clipX":10}},{"type":"Clip","props":{"x":126,"skin":"ui/clip_number.png","name":"item7","clipX":10}},{"type":"Clip","props":{"x":144,"skin":"ui/clip_number.png","name":"item8","clipX":10}},{"type":"Clip","props":{"x":162,"skin":"ui/clip_number.png","name":"item9","clipX":10}}]}]};
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.createView(ui.GameOverUI.uiView);
+        }
+    }
+}
+
+module ui {
+    export class GameStartUI extends View {
+		public startBtn:Laya.Button;
+
+        public static  uiView:any ={"type":"View","props":{"width":800,"height":600},"child":[{"type":"Image","props":{"y":55,"x":38,"skin":"ui/help.png"}},{"type":"Button","props":{"y":432,"x":309,"var":"startBtn","stateNum":2,"skin":"ui/btn_start.png"}}]};
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.createView(ui.GameStartUI.uiView);
+        }
     }
 }
 
@@ -28,8 +55,6 @@ module ui {
         
             super.createChildren();
             this.createView(ui.HammerUI.uiView);
-
         }
-
     }
 }

@@ -7,6 +7,7 @@ class Hammer extends ui.HammerUI {
 		Laya.Mouse.hide()
 		Laya.stage.on(Laya.Event.MOUSE_DOWN, this, this.onMouseDown)
 		Laya.stage.on(Laya.Event.MOUSE_MOVE, this, this.onMouseMove)
+		this.onMouseMove()
 	}
 
 	end(): void {

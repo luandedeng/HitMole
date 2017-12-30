@@ -8,9 +8,7 @@ class GameView extends ui.GameUI {
 	constructor() {
 		super()
 		this.moles = new Array<Mole>()
-		// 进度条初始值为1
-		this.timeBar.value = 1
-		this.score = 0
+
 		// 分数回调
 		let hitCallBackHd: Laya.Handler = Laya.Handler.create(this, this.setScore, null, false)
 
@@ -28,14 +26,11 @@ class GameView extends ui.GameUI {
 
 		this.hammer = new Hammer()
 		this.addChild(this.hammer)
-		this.hammer.start()
-
-		// this.mole = new Mole(this.normal, this.hit, 21)
-		Laya.timer.loop(1000, this, this.onLoop)
+		this.hammer.visible = false
 	}
 
 	onLoop(): void {
-		this.timeBar.value -= 1 / 90
+		this.timeBar.value -= 1 / 20
 		if (this.timeBar.value <= 0) {
 			this.gameOver()
 			return
@@ -45,10 +40,29 @@ class GameView extends ui.GameUI {
 		this.moles[index].show()
 	}
 
+	gameStart(): void {
+		// 进度条初始值为1
+		this.timeBar.value = 1
+		this.score = 0
+		this.updateScoreUI()
+		this.hammer.visible = true
+		this.hammer.start()
+
+		// this.mole = new Mole(this.normal, this.hit, 21)
+		Laya.timer.loop(1000, this, this.onLoop)
+	}
+
 	gameOver(): void {
 		Laya.timer.clear(this, this.onLoop)
 		this.hammer.visible = false
 		this.hammer.end()
+		if (!GameMain.gameOver) {
+			GameMain.gameOver = new GameOver()
+		}
+		GameMain.gameOver.centerX = 0
+		GameMain.gameOver.centerY = 40
+		GameMain.gameOver.setScoreUI(this.score)
+		Laya.stage.addChild(GameMain.gameOver)
 		console.log('游戏结束')
 	}
 
