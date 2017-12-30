@@ -7,6 +7,7 @@ class Mole {
 	private isActive: boolean
 	private isShow: boolean
 	private isHit: boolean
+	private type: number
 
 	constructor(normalState: Laya.Image, hitState: Laya.Image, downY: number) {
 		this.normalState = normalState
@@ -32,6 +33,11 @@ class Mole {
 
 		this.isActive = true
 		this.isShow = true
+
+		this.type = Math.random() < 0.4 ? 1 : 2
+		this.normalState.skin = 'ui/mouse_normal_' + this.type + '.png'
+		this.hitState.skin = 'ui/mouse_hit_' + this.type + '.png'
+
 		this.normalState.y = this.downY
 		this.normalState.visible = true
 		Laya.Tween.to(
@@ -46,7 +52,7 @@ class Mole {
 	// 停留
 	showComplete(): void {
 		if (this.isShow && !this.isHit) {
-			Laya.timer.once(2000, this, this.hide)
+			Laya.timer.once(1000, this, this.hide)
 		}
 	}
 
