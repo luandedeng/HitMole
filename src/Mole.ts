@@ -3,18 +3,30 @@ class Mole {
 	private hitState: Laya.Image
 	private downY: number
 	private upY: number
+	private scoreImg: Laya.Image
+	private scoreY: number
 
 	private isActive: boolean
 	private isShow: boolean
 	private isHit: boolean
 	private type: number
+	private hitCallBackHd: Laya.Handler
 
-	constructor(normalState: Laya.Image, hitState: Laya.Image, downY: number) {
+	constructor(
+		normalState: Laya.Image,
+		hitState: Laya.Image,
+		scoreImg: Laya.Image,
+		downY: number,
+		hitCallBack: Laya.Handler
+	) {
 		this.normalState = normalState
 		this.hitState = hitState
 		this.downY = downY
 		this.upY = this.normalState.y
+		this.scoreImg = scoreImg
+		this.scoreY = this.scoreImg.y
 		this.reset()
+		this.hitCallBackHd = hitCallBack
 		this.normalState.on(Laya.Event.MOUSE_DOWN, this, this.hit)
 	}
 
@@ -22,6 +34,7 @@ class Mole {
 	reset(): void {
 		this.normalState.visible = false
 		this.hitState.visible = false
+		this.scoreImg.visible = false
 		this.isActive = false
 		this.isShow = false
 		this.isHit = false
@@ -37,6 +50,7 @@ class Mole {
 		this.type = Math.random() < 0.4 ? 1 : 2
 		this.normalState.skin = 'ui/mouse_normal_' + this.type + '.png'
 		this.hitState.skin = 'ui/mouse_hit_' + this.type + '.png'
+		this.scoreImg.skin = 'ui/score_' + this.type + '.png'
 
 		this.normalState.y = this.downY
 		this.normalState.visible = true
@@ -78,7 +92,16 @@ class Mole {
 			Laya.timer.clear(this, this.hide)
 			this.normalState.visible = false
 			this.hitState.visible = true
+			this.hitCallBackHd.runWith(this.type)
 			Laya.timer.once(500, this, this.reset)
+			this.showScore()
 		}
+	}
+
+	showScore(): void {
+		this.scoreY += -5
+		this.scoreImg.scale(0, 0)
+		this.scoreImg.visible = true
+		Laya.Tween.to(this.scoreImg, { y: this.scoreY, scaleX: 1, scaleY: 1 }, 200, Laya.Ease.backInOut)
 	}
 }
